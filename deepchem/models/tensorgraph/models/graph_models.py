@@ -123,6 +123,8 @@ class WeaveModel(TensorGraph):
         gaussian_expand=True,
         in_layers=[batch_norm1, self.atom_split])
 
+    self.neural_fingerprint = weave_gather
+
     n_tasks = self.n_tasks
     weights = Weights(shape=(None, n_tasks))
     if self.mode == 'classification':
@@ -300,6 +302,8 @@ class DTNNModel(TensorGraph):
         in_layers=[dtnn_layer2, self.atom_membership])
     if self.dropout > 0.0:
       dtnn_gather = Dropout(self.dropout, in_layers=dtnn_gather)
+
+    self.neural_fingerprint = dtnn_gather
 
     n_tasks = self.n_tasks
     weights = Weights(shape=(None, n_tasks))
@@ -864,6 +868,8 @@ class MPNNModel(TensorGraph):
         out_channels=2 * self.n_hidden,
         activation_fn=tf.nn.relu,
         in_layers=[mol_embeddings])
+
+    self.neural_fingerprint = dense1
 
     n_tasks = self.n_tasks
     weights = Weights(shape=(None, n_tasks))

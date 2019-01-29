@@ -68,7 +68,7 @@ parser.add_argument(
     '-t',
     action='store_true',
     dest='test',
-    default=False,
+    default=True,
     help='Evalute performance on test set')
 parser.add_argument(
     '--seed',
